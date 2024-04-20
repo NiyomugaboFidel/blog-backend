@@ -8,6 +8,8 @@ const {authRouter} = require('./routes/auth');
 const { verifyToken } = require('./middlewares/authMiddleware');
 const {postRoutes} = require('./routes/PostRoutes')
 const cloudinary = require('cloudinary').v2
+const cors = require('cors');
+
 
 cloudinary.config({ 
     cloud_name: 'dmosnjgob', 
@@ -22,7 +24,8 @@ const app = express();
 //console.log(require('crypto').randomBytes(64).toString('hex') )
 // Middleware
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(cors())
 app.use(session({
     secret : process.env.JWT_SECRET_KEY,
     resave : false,
