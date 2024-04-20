@@ -34,11 +34,11 @@ const upload = multer({
     fileFiter: fileFiter
 })
 
-router.post('/upload',verifyToken,upload.single('image'), createPost)
-router.put('/updatepost',verifyToken,upload.single('image'),updatePost)
-router.get('/getpost/:id', getPost)
-router.get('/getposts', getAllPost)
-router.delete('/deletepost/:id',verifyToken, deletePost)
+router.post('/upload',verifyToken,upload.single('image'), createPost);
+router.put('/updatepost',verifyToken,upload.single('image'),updatePost);
+router.get('/getpost/:id', getPost);
+router.get('/getposts', getAllPost);
+router.delete('/deletepost/:id',verifyToken, deletePost);
 
 
 
