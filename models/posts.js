@@ -15,44 +15,66 @@ const postSchema = new schema({
         required: true,
 
     },
-    date:{
-        type: Date,
-        default: Date.now
+    avatar: {
+      type: String,
+      required: true,
     },
-    likes: {
+    username:{
+      type: String,
+      required: true,
+
+    },
+    likeCount: {
       type: Number,
       default : 0
     },
-    Comments : {
+    likesBy:{
+          type:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+          
+    },
+    comments : {
         type: [{
             type: mongoose.Schema.Types.ObjectId,
             ref : 'Comment'
         }]
+    },
+    date : {
+      type: Date,
+      default : Date.now
+
     }
 
 })
 
 
-const CommentSchema = new mongoose.Schema({
-      Comment : {
-        type: String,
-        required: true,
-      },
+const commentSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  username:{
 
-      user : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref : 'User',
-        required :true,
-      },
+    type : String,
+    require: true
+  } , // Add field for username
+  avatar:{
+    type: String,
+    required : true
 
-      date : {
-        type: Date,
-        default : Date.now
+  } ,// Add field for avatar
+  postId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post',
+    required: true
+  }
+}, { timestamps: true });
 
-      }
-})
-
-const Comment = mongoose.model('Comment', CommentSchema)
+const Comment = mongoose.model('Comment', commentSchema);
 
 const Post  = mongoose.model('Post', postSchema)
 

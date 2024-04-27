@@ -8,6 +8,7 @@ const {authRouter} = require('./routes/auth');
 const { verifyToken } = require('./middlewares/authMiddleware');
 const {postRoutes} = require('./routes/PostRoutes')
 const cloudinary = require('cloudinary').v2
+const bodyParser = require('body-parser')
 const cors = require('cors');
 
 
@@ -25,12 +26,13 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json())
 app.use(cors())
-app.use(session({
-    secret : process.env.JWT_SECRET_KEY,
-    resave : false,
-    saveUninitialized: false,
-}))
+// app.use(session({
+//     secret : process.env.JWT_SECRET_KEY,
+//     resave : false,
+//     saveUninitialized: false,
+// }))
 
 // Connect to MongoDB
 mongoose.connect(process.env.DB_URL, {
@@ -44,8 +46,8 @@ app.use('/', authRouter);
 app.use('/post', postRoutes);
 
 
-app.get('/dash',verifyToken('admin'), (req, res)=>{
-    res.send('AdminDashboad')
+app.get('/dash',verifyToken('user'), (req, res)=>{
+   return res.send('AdminDashboad')
 })
 
 app.get('/userdash',verifyToken('user'), (req, res)=>{
